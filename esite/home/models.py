@@ -50,9 +50,13 @@ class Button(models.Model):
 
 #> Header
 class _H_HeroBlock(blocks.StructBlock):
-    slide_image = ImageChooserBlock(required=True, blank=False, help_text="Großes, hochauflösendes Titelbild")
-    slide_head = blocks.CharBlock(required=False, help_text="Titlebild-Text")
-    slide_button = SnippetChooserBlock(Button, required=False, help_text="Titelbild-Button")
+    slide_image = ImageChooserBlock(required=True, blank=False, help_text="Großes, hochauflösendes Titelbild einer Versicherung")
+    slide_head = blocks.CharBlock(required=True, help_text="Versicherungstyp")
+    slide_lead = blocks.CharBlock(required=True, help_text="Infosatz zur Versicherung")
+    slide_contact = blocks.CharBlock(required=True, help_text="Ansprechpartner (Name)")
+    slide_email = blocks.CharBlock(required=False, help_text="E-Mail Adresse des Ansprechpartners")
+    slide_mobile = blocks.CharBlock(required=False, help_text="Mobile Handynummer des Ansprechpartners")
+    slide_phone = blocks.CharBlock(required=False, help_text="Telefonnummer des Ansprechpartners")
 
 class FeatureFeatureBlock(blocks.StructBlock):
     feature_image = ImageChooserBlock(required=True, help_text="Icon, um eine angebotene Leistung darzustellen")
@@ -81,22 +85,11 @@ class _S_PartnersBlock(blocks.StructBlock):
         ('coordinate', MapsCoordBlock(required=False, icon='fa-info'))
     ], required=True, help_text="Liste hier Partnerunternehmen auf")
 
-class ReferencesReferenceBlock(blocks.StructBlock):
-    ref_img = ImageChooserBlock(required=True, help_text="Referenz-Titelbild")
-    ref_link = SnippetChooserBlock(Button, required=False, help_text="Referenz-Unterseite")
-    ref_head = blocks.CharBlock(required=False, help_text="Referenz-Header")
-    ref_lead = blocks.CharBlock(required=False, help_text="Referenz-Untertitel")
-
-class _S_ReferencesBlock(blocks.StructBlock):
-    ref = blocks.StreamBlock([
-        ('reference', ReferencesReferenceBlock(required=False, icon='fa-info'))
-    ], required=True, help_text="Referenzen")
-
 class _S_AboutBlock(blocks.StructBlock):
     about_img = ImageChooserBlock(required=False, help_text="Portraitfoto")
-    about_head = blocks.CharBlock(required=False, help_text="Über mich-Header")
+    about_head = blocks.CharBlock(required=False, help_text="Über Uns-Header")
     about_lead = blocks.CharBlock(required=False, help_text="Untertitel")
-    about_text = blocks.RichTextBlock(label='Text', required=True, help_text="Beschreibung Über Mich")
+    about_text = blocks.RichTextBlock(label='Text', required=True, help_text="Beschreibung Über Uns")
 
 class NewsNewsBlock(blocks.StructBlock):
     news_img = ImageChooserBlock(required=True, help_text="News-Titelbild")
@@ -106,7 +99,42 @@ class NewsNewsBlock(blocks.StructBlock):
 class _S_NewsBlock(blocks.StructBlock):
     news = blocks.StreamBlock([
         ('news', NewsNewsBlock(required=False, icon='fa-info'))
-    ], required=True, help_text="Neuigkeiten zu Projekten")
+    ], required=True, help_text="Neuigkeiten")
+
+class InsurancesInsuranceBlock(blocks.StructBlock):
+    insurance_image = ImageChooserBlock(required=True, help_text="Bild, um eine Versicherung darzustellen")
+    insurance_head = blocks.CharBlock(required=True, help_text="Titel einer angebotenen Versicherung")
+    insurance_lead = blocks.CharBlock(required=False, help_text="Lead Text einer angebotenen Versicherung")
+    insurance_text = blocks.RichTextBlock(label='Text', required=True, help_text="Beschreibung der angebotenen Leistung")
+
+class _S_PrivateInsuranceBlock(blocks.StructBlock):
+    insurances = blocks.StreamBlock([
+        ('insurance', InsurancesInsuranceBlock(null=True, blank=False, required=False, icon='fa-info'))
+    ], null=True, required=True, help_text='Füge beliebig viele angebotene Versicherungen für Privatkunden hinzu')
+
+class _S_BusinessInsuranceBlock(blocks.StructBlock):
+    insurances = blocks.StreamBlock([
+        ('insurance', InsurancesInsuranceBlock(null=True, blank=False, required=False, icon='fa-info'))
+    ], null=True, required=True, help_text='Füge beliebig viele angebotene Versicherungen für Geschäftskunden hinzu')
+
+class TeamMemberServiceBlock(blocks.StructBlock):
+    service_name = blocks.CharBlock(required=True, help_text="Angebotener Service")
+
+class TeamMemberBlock(blocks.StructBlock):
+    member_image = ImageChooserBlock(required=True, help_text="Bild des Mitarbeiters/der Mitarbeiterin")
+    member_name = blocks.CharBlock(required=True, help_text="Name des Mitarbeiters/der Mitarbeiterin")
+    member_services = blocks.StreamBlock([
+        ('services', TeamMemberServiceBlock(null=True, blank=False, required=False, icon='fa-info'))
+    ], null=True, required=True, help_text='Welche Services bietet dieser MA? z.B. KFZ-Versicherungsexperte, Haushaltsversicherungen, Allround-Experte, ...')
+    member_text = blocks.RichTextBlock(label='Text', required=False, help_text="Genauere Beschreibung des MA, z.B. langjährige Erfahrung, Wirtschaftserfahrung, ...")
+    member_email = blocks.CharBlock(required=False, help_text="E-Mail Adresse des Mitarbeiters/der Mitarbeiterin")
+    member_mobile = blocks.CharBlock(required=False, help_text="Mobile Nummer des Mitarbeiters/der Mitarbeiterin")
+    member_phone = blocks.CharBlock(required=False, help_text="Telefonnummer des Mitarbeiters/der Mitarbeiterin")
+
+class _S_TeamBlock(blocks.StructBlock):
+    team_members = blocks.StreamBlock([
+        ('team_member', TeamMemberBlock(null=True, blank=False, required=False, icon='fa-info'))
+    ], null=True, required=True, help_text='Füge beliebig viele angebotene Versicherungen für Privatkunden hinzu')
 
 class _S_ContentCenter(blocks.StructBlock):
     content_center_head = blocks.CharBlock(required=False, help_text="Content-Center Header")
@@ -162,9 +190,11 @@ class HomePage(Page):
         ('s_feature', _S_FeatureBlock(icon='fa-info')),
         ('s_maps', _S_MapsBlock(icon='fa-info')),
         ('s_partners', _S_PartnersBlock(icon='fa-info')),
-        ('s_references', _S_ReferencesBlock(icon='fa-info')),
         ('s_about', _S_AboutBlock(icon='fa-info')),
         ('s_news', _S_NewsBlock(icon='fa-info')),
+        ('s_privateinsurances', _S_PrivateInsuranceBlock(icon='fa-info')),
+        ('s_businessinsurances', _S_BusinessInsuranceBlock(icon='fa-info')),
+        ('s_team', _S_TeamBlock(icon='fa-info')),
         ('s_contentcenter', _S_ContentCenter(icon='fa-info')),
         ('s_contentright', _S_ContentRight(icon='fa-info')),
         ('s_contentleft', _S_ContentLeft(icon='fa-info'))
