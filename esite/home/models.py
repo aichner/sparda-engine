@@ -91,6 +91,7 @@ class NewsNewsBlock(blocks.StructBlock):
     news_img = ImageChooserBlock(required=True, help_text="News-Titelbild")
     news_head = blocks.CharBlock(required=False, help_text="News-Header")
     news_text = blocks.RichTextBlock(label='Text', required=True, help_text="Kurze Beschreibung der News")
+    news_page = blocks.PageChooserBlock(required=False, help_text="News-Artikel")
 
 class _S_NewsBlock(blocks.StructBlock):
     news = blocks.StreamBlock([
