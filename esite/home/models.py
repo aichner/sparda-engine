@@ -53,10 +53,6 @@ class _H_HeroBlock(blocks.StructBlock):
     slide_image = ImageChooserBlock(required=True, blank=False, help_text="Großes, hochauflösendes Titelbild einer Versicherung")
     slide_head = blocks.CharBlock(required=True, help_text="Versicherungstyp")
     slide_lead = blocks.CharBlock(required=True, help_text="Infosatz zur Versicherung")
-    slide_contact = blocks.CharBlock(required=True, help_text="Ansprechpartner (Name)")
-    slide_email = blocks.CharBlock(required=False, help_text="E-Mail Adresse des Ansprechpartners")
-    slide_mobile = blocks.CharBlock(required=False, help_text="Mobile Handynummer des Ansprechpartners")
-    slide_phone = blocks.CharBlock(required=False, help_text="Telefonnummer des Ansprechpartners")
 
 class FeatureFeatureBlock(blocks.StructBlock):
     feature_image = ImageChooserBlock(required=True, help_text="Icon, um eine angebotene Leistung darzustellen")
