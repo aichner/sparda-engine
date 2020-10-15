@@ -53,6 +53,7 @@ class _H_HeroBlock(blocks.StructBlock):
     slide_image = ImageChooserBlock(required=True, blank=False, help_text="Großes, hochauflösendes Titelbild einer Versicherung")
     slide_head = blocks.CharBlock(required=True, help_text="Versicherungstyp")
     slide_lead = blocks.CharBlock(required=True, help_text="Infosatz zur Versicherung")
+    slug = blocks.CharBlock(required=False, null=True, blank=True, help_text="Slug (Navigation)")
 
 class FeatureFeatureBlock(blocks.StructBlock):
     feature_image = ImageChooserBlock(required=True, help_text="Icon, um eine angebotene Leistung darzustellen")
@@ -63,6 +64,7 @@ class _S_FeatureBlock(blocks.StructBlock):
     features = blocks.StreamBlock([
         ('feature', FeatureFeatureBlock(null=True, blank=False, required=False, icon='fa-info'))
     ], null=True, required=True, help_text='Füge zwischen einer und drei angebotenen Leistungen hinzu', max_num=3)
+    slug = blocks.CharBlock(required=False, null=True, blank=True, help_text="Slug (Navigation)")
 
 class MapsCoordBlock(blocks.StructBlock):
     coordinate = blocks.CharBlock(required=True, help_text="Gebe hier die Google-Maps-Koordinaten eines Projektes an")
@@ -71,6 +73,7 @@ class _S_MapsBlock(blocks.StructBlock):
     coordinates = blocks.StreamBlock([
         ('coordinate', MapsCoordBlock(required=False, icon='fa-info'))
     ], required=True, help_text="Zeige die Projekt-Locations in einer Map an")
+    slug = blocks.CharBlock(required=False, null=True, blank=True, help_text="Slug (Navigation)")
 
 class PartnersPartnerBlock(blocks.StructBlock):
     partner_img = ImageChooserBlock(required=True, help_text="Partner-Logo")
@@ -80,12 +83,14 @@ class _S_PartnersBlock(blocks.StructBlock):
     coordinates = blocks.StreamBlock([
         ('coordinate', MapsCoordBlock(required=False, icon='fa-info'))
     ], required=True, help_text="Liste hier Partnerunternehmen auf")
+    slug = blocks.CharBlock(required=False, null=True, blank=True, help_text="Slug (Navigation)")
 
 class _S_AboutBlock(blocks.StructBlock):
     about_img = ImageChooserBlock(required=False, help_text="Portraitfoto")
     about_head = blocks.CharBlock(required=False, help_text="Über Uns-Header")
     about_lead = blocks.CharBlock(required=False, help_text="Untertitel")
     about_text = blocks.RichTextBlock(label='Text', required=True, help_text="Beschreibung Über Uns")
+    slug = blocks.CharBlock(required=False, null=True, blank=True, help_text="Slug (Navigation)")
 
 class NewsNewsBlock(blocks.StructBlock):
     news_img = ImageChooserBlock(required=True, help_text="News-Titelbild")
@@ -97,6 +102,7 @@ class _S_NewsBlock(blocks.StructBlock):
     news = blocks.StreamBlock([
         ('news', NewsNewsBlock(required=False, icon='fa-info'))
     ], required=True, help_text="Neuigkeiten")
+    slug = blocks.CharBlock(required=False, null=True, blank=True, help_text="Slug (Navigation)")
 
 class InsurancesInsuranceBlock(blocks.StructBlock):
     insurance_image = ImageChooserBlock(required=True, help_text="Bild, um eine Versicherung darzustellen")
@@ -108,11 +114,13 @@ class _S_PrivateInsuranceBlock(blocks.StructBlock):
     insurances = blocks.StreamBlock([
         ('insurance', InsurancesInsuranceBlock(null=True, blank=False, required=False, icon='fa-info'))
     ], null=True, required=True, help_text='Füge beliebig viele angebotene Versicherungen für Privatkunden hinzu')
+    slug = blocks.CharBlock(required=False, null=True, blank=True, help_text="Slug (Navigation)")
 
 class _S_BusinessInsuranceBlock(blocks.StructBlock):
     insurances = blocks.StreamBlock([
         ('insurance', InsurancesInsuranceBlock(null=True, blank=False, required=False, icon='fa-info'))
     ], null=True, required=True, help_text='Füge beliebig viele angebotene Versicherungen für Geschäftskunden hinzu')
+    slug = blocks.CharBlock(required=False, null=True, blank=True, help_text="Slug (Navigation)")
 
 class TeamMemberServiceBlock(blocks.StructBlock):
     service_name = blocks.CharBlock(required=True, help_text="Angebotener Service")
@@ -132,23 +140,27 @@ class _S_TeamBlock(blocks.StructBlock):
     team_members = blocks.StreamBlock([
         ('team_member', TeamMemberBlock(null=True, blank=False, required=False, icon='fa-info'))
     ], null=True, required=True, help_text='Füge beliebig viele angebotene Versicherungen für Privatkunden hinzu')
+    slug = blocks.CharBlock(required=False, null=True, blank=True, help_text="Slug (Navigation)")
 
 class _S_ContentCenter(blocks.StructBlock):
     content_center_head = blocks.CharBlock(required=False, help_text="Content-Center Header")
     content_center_lead = blocks.CharBlock(required=False, help_text="Content-Center Untertitel")
     content_center_text = blocks.RichTextBlock(label='Text', required=False, help_text="Content-Center Text")
+    slug = blocks.CharBlock(required=False, null=True, blank=True, help_text="Slug (Navigation)")
     
 class _S_ContentRight(blocks.StructBlock):
     content_right_img = ImageChooserBlock(required=False, help_text="Content-Right Titelbild")
     content_right_head = blocks.CharBlock(required=False, help_text="Content-Right Header")
     content_right_lead = blocks.CharBlock(required=False, help_text="Content-Right Untertitel")
     content_right_text = blocks.RichTextBlock(label='Text', required=False, help_text="Content-Right Text")
+    slug = blocks.CharBlock(required=False, null=True, blank=True, help_text="Slug (Navigation)")
 
 class _S_ContentLeft(blocks.StructBlock):
     content_left_img = ImageChooserBlock(required=False, help_text="Content-Left Titelbild")
     content_left_head = blocks.CharBlock(required=False, help_text="Content-Left Header")
     content_left_lead = blocks.CharBlock(required=False, help_text="Content-Left Untertitel")
     content_left_text = blocks.RichTextBlock(label='Text', required=False, help_text="Content-Left Text")
+    slug = blocks.CharBlock(required=False, null=True, blank=True, help_text="Slug (Navigation)")
 
 #> Homepage
 class HomePage(Page):
