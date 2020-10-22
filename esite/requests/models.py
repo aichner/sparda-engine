@@ -38,7 +38,7 @@ class Request(models.Model):
             "<p><b>Kontakt Telefon-Nr.:</b> " + self.phone + "</p>" + \
             "<p><b>Nachricht:</b></p><p>" + self.note + "</p>"
 
-        subject = "Immobilienanfrage " + self.title
+        subject = "Versicherungsanfrage " + self.title
 
         message = Mail(
             from_email='inspiremedia-fwd@outlook.com',
