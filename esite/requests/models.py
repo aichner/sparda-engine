@@ -46,8 +46,7 @@ class Request(models.Model):
             subject=subject,
             html_content=mail)
 
-        # sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-        # sg = SendGridAPIClient('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')
+        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
         response = sg.send(message)
         # print(response.status_code)
         # print(response.body)
