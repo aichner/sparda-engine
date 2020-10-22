@@ -4,6 +4,9 @@
 .venv
 venv
 
+# Visual Studio Code
+.vscode
+
 # Django environments
 linux-venv/
 windows-venv/

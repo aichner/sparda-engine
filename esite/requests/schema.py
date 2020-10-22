@@ -25,7 +25,6 @@ class CreateRequest(graphene.Mutation):
 
     class Arguments:
         title = graphene.String(required=True)
-        link = graphene.String(required=True)
         name = graphene.String(required=True)
         _type = graphene.String(required=True)
         email = graphene.String(required=False)
@@ -34,11 +33,11 @@ class CreateRequest(graphene.Mutation):
         token = graphene.String(required=False)
 
     @login_required
-    def mutate(self, info, title, link, name, _type, **_kwargs):
+    def mutate(self, info, title, name, _type, **_kwargs):
         email = _kwargs.get('email', None)
         phone = _kwargs.get('phone', None)
         note = _kwargs.get('note', None)
-        r = Request(title=title, link=link, name=name, _type=_type, email=email, phone=phone, note=note)
+        r = Request(title=title, name=name, _type=_type, email=email, phone=phone, note=note)
         r.save()
 
         return CreateRequest(r.title)
