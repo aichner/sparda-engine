@@ -92,17 +92,17 @@ class _S_AboutBlock(blocks.StructBlock):
     about_text = blocks.RichTextBlock(label='Text', required=True, help_text="Beschreibung Über Uns")
     slug = blocks.CharBlock(required=False, null=True, blank=True, help_text="Slug (Navigation)")
 
-class NewsNewsBlock(blocks.StructBlock):
-    news_img = ImageChooserBlock(required=True, help_text="News-Titelbild")
-    news_head = blocks.CharBlock(required=False, help_text="News-Header")
-    news_text = blocks.RichTextBlock(label='Text', required=True, help_text="Kurze Beschreibung der News")
-    news_page = blocks.PageChooserBlock(required=False, help_text="News-Artikel")
+# class NewsNewsBlock(blocks.StructBlock):
+#     news_img = ImageChooserBlock(required=True, help_text="News-Titelbild")
+#     news_head = blocks.CharBlock(required=False, help_text="News-Header")
+#     news_text = blocks.RichTextBlock(label='Text', required=True, help_text="Kurze Beschreibung der News")
+#     news_page = blocks.PageChooserBlock(required=False, help_text="News-Artikel")
 
-class _S_NewsBlock(blocks.StructBlock):
-    news = blocks.StreamBlock([
-        ('news', NewsNewsBlock(required=False, icon='fa-info'))
-    ], required=True, help_text="Neuigkeiten")
-    slug = blocks.CharBlock(required=False, null=True, blank=True, help_text="Slug (Navigation)")
+# class _S_NewsBlock(blocks.StructBlock):
+#     news = blocks.StreamBlock([
+#         ('news', NewsNewsBlock(required=False, icon='fa-info'))
+#     ], required=True, help_text="Neuigkeiten")
+#     slug = blocks.CharBlock(required=False, null=True, blank=True, help_text="Slug (Navigation)")
 
 class InsurancesInsuranceBlock(blocks.StructBlock):
     insurance_image = ImageChooserBlock(required=True, help_text="Bild, um eine Versicherung darzustellen")
@@ -162,6 +162,17 @@ class _S_ContentLeft(blocks.StructBlock):
     content_left_text = blocks.RichTextBlock(label='Text', required=False, help_text="Content-Left Text")
     slug = blocks.CharBlock(required=False, null=True, blank=True, help_text="Slug (Navigation)")
 
+class _N_NewsBlock(blocks.StructBlock):
+    news_img = ImageChooserBlock(required=True, help_text="News-Titelbild")
+    news_head = blocks.CharBlock(required=False, help_text="News-Header")
+    news_text = blocks.RichTextBlock(
+        label='Text', required=True, help_text="Kurze Beschreibung der News")
+    news_page = blocks.PageChooserBlock(
+        required=False, help_text="News-Artikel")
+    # news_button = SnippetChooserBlock(Button, required=False, help_text="News-Artikel")
+
+
+
 #> Homepage
 class HomePage(Page):
     city = models.CharField(null=True, blank=False, max_length=255)
@@ -200,7 +211,7 @@ class HomePage(Page):
         ('s_maps', _S_MapsBlock(icon='fa-info')),
         ('s_partners', _S_PartnersBlock(icon='fa-info')),
         ('s_about', _S_AboutBlock(icon='fa-info')),
-        ('s_news', _S_NewsBlock(icon='fa-info')),
+        # ('s_news', _S_NewsBlock(icon='fa-info')),
         ('s_privateinsurances', _S_PrivateInsuranceBlock(icon='fa-info')),
         ('s_businessinsurances', _S_BusinessInsuranceBlock(icon='fa-info')),
         ('s_team', _S_TeamBlock(icon='fa-info')),
@@ -209,9 +220,14 @@ class HomePage(Page):
         ('s_contentleft', _S_ContentLeft(icon='fa-info'))
     ], null=True, blank=True)
 
+    news = StreamField([
+        ('n_news', _N_NewsBlock(icon='fa-info')),
+    ], null=True, blank=True)
+
     main_content_panels = [
         StreamFieldPanel('headers'),
         StreamFieldPanel('sections'),
+        StreamFieldPanel('news'),
         # StreamFieldPanel('footers')
     ]
 
